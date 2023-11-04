@@ -23,10 +23,7 @@ dependencies {
 	//testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'org.postgresql:postgresql'
 
-	dependencies {
-// other dependencies...
-runtimeOnly 'com.h2database:h2:2.1.214'
-}
+
 }
 
 tasks.named('test') {
