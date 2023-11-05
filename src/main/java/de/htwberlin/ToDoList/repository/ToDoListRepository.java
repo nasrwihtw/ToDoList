@@ -1,14 +1,15 @@
 package de.htwberlin.ToDoList.repository;
 
-import de.htwberlin.ToDoList.model.ToDoList;
-import org.springframework.data.repository.CrudRepository;
+
+import de.htwberlin.ToDoList.persistence.TodDoListEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ToDoListRepository extends CrudRepository<ToDoList, Long> {
-
+public interface ToDoListRepository extends JpaRepository<TodDoListEntity, Long> {
+List<TodDoListEntity> findByTitle(String title);
 
 
 }

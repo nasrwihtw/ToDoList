@@ -1,33 +1,30 @@
-package de.htwberlin.ToDoList.model;
+package de.htwberlin.ToDoList.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-
-
-public class ToDoList {
-
-
+@Entity(name= "TodDoLists")
+public class TodDoListEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+    @Column(name="title", nullable = false)
     private String title;
+    @Column(name="dueDate" , nullable = false)
     private String dueDate;
+    @Column(name="completed")
     private String completed;
 
-    public ToDoList(Long id, String title, String dueDate, String completed) {
-        this.id = id;
+    public TodDoListEntity(String title, String dueDate, String completed) {
         this.title = title;
         this.dueDate = dueDate;
         this.completed = completed;
     }
 
+    protected TodDoListEntity() {}
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
