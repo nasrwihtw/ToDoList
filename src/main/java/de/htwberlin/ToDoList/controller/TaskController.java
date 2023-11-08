@@ -2,9 +2,9 @@ package de.htwberlin.ToDoList.controller;
 
 
 
-import de.htwberlin.ToDoList.model.ToDoList;
-import de.htwberlin.ToDoList.model.ToDoListManipulationCreatRequest;
-import de.htwberlin.ToDoList.service.ToDoListService;
+import de.htwberlin.ToDoList.model.Task;
+import de.htwberlin.ToDoList.model.TaskManipulationCreateRequest;
+import de.htwberlin.ToDoList.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,41 +15,41 @@ import java.util.List;
 
 
 @RestController
-public class ToDoListController {
+public class TaskController {
 
-    private final ToDoListService toDoListService;
+    private final TaskService taskService;
 
-    public ToDoListController(ToDoListService toDoListService) {
-        this.toDoListService = toDoListService;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
-    @GetMapping(path= "/api/a1/todolists")
-    public ResponseEntity<List<ToDoList>> fetchTodoList(){
-        return ResponseEntity.ok(toDoListService.findAll());
+    @GetMapping(path= "/api/a1/task")
+    public ResponseEntity<List<Task>> fetchTask(){
+        return ResponseEntity.ok(taskService.findAll());
     }
 
-    @GetMapping(path= "/api/a1/todolists/{id}")
-    public  ResponseEntity fetchTodDoListByID(@PathVariable Long id){
-        var toDoList= toDoListService.findById(id);
-        return  toDoList != null? ResponseEntity.ok(toDoList): ResponseEntity.notFound().build();
+    @GetMapping(path= "/api/a1/task/{id}")
+    public  ResponseEntity fetchTaskByID(@PathVariable Long id){
+        var task= taskService.findById(id);
+        return  task != null? ResponseEntity.ok(task): ResponseEntity.notFound().build();
     }
 
 
-    @PostMapping(path= "/api/a1/todolists")
-    public ResponseEntity<Void> createToDoList(@RequestBody ToDoListManipulationCreatRequest request) throws URISyntaxException {
-        var toDoList =toDoListService.create(request);
-        URI url= new URI("/api/a1/todolist" + toDoList.getId());
+    @PostMapping(path= "/api/a1/task")
+    public ResponseEntity<Void> createTask(@RequestBody TaskManipulationCreateRequest request) throws URISyntaxException {
+        var task = taskService.create(request);
+        URI url= new URI("/api/a1/task" + task.getId());
         return ResponseEntity.created(url).build();
     }
 
-    @PutMapping("/api/a1/todolists/{id}")
-    public ResponseEntity<ToDoList> updateTodoList(@PathVariable Long id, @RequestBody ToDoListManipulationCreatRequest request){
-        var toDoList = toDoListService.update(id, request);
-        return  toDoList != null? ResponseEntity.ok(toDoList): ResponseEntity.notFound().build();
+    @PutMapping("/api/a1/task/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskManipulationCreateRequest request){
+        var task = taskService.update(id, request);
+        return  task != null? ResponseEntity.ok(task): ResponseEntity.notFound().build();
     }
-    @DeleteMapping("/api/a1/todolists/{id}")
-    public ResponseEntity<Void> updateTodoList(@PathVariable Long id){
-        boolean successful = toDoListService.deleteById(id);
+    @DeleteMapping("/api/a1/task/{id}")
+    public ResponseEntity<Void> updateTask(@PathVariable Long id){
+        boolean successful = taskService.deleteById(id);
         return  successful? ResponseEntity.ok().build(): ResponseEntity.notFound().build();
     }
 
