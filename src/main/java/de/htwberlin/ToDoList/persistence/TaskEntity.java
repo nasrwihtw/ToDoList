@@ -2,8 +2,8 @@ package de.htwberlin.ToDoList.persistence;
 
 import jakarta.persistence.*;
 
-@Entity(name= "TodDoLists")
-public class TodDoListEntity {
+@Entity(name= "Task")
+public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -15,13 +15,13 @@ public class TodDoListEntity {
     @Column(name="completed")
     private String completed;
 
-    public TodDoListEntity(String title, String dueDate, String completed) {
+    public TaskEntity(String title, String dueDate, String completed) {
         this.title = title;
         this.dueDate = dueDate;
         this.completed = completed;
     }
 
-    protected TodDoListEntity() {}
+    protected TaskEntity() {}
 
     public Long getId() {
         return id;

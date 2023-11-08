@@ -1,67 +1,67 @@
 package de.htwberlin.ToDoList.service;
 
-import de.htwberlin.ToDoList.model.ToDoList;
-import de.htwberlin.ToDoList.model.ToDoListManipulationCreatRequest;
-import de.htwberlin.ToDoList.persistence.TodDoListEntity;
-import de.htwberlin.ToDoList.repository.ToDoListRepository;
+import de.htwberlin.ToDoList.model.Task;
+import de.htwberlin.ToDoList.model.TaskManipulationCreateRequest;
+import de.htwberlin.ToDoList.persistence.TaskEntity;
+import de.htwberlin.ToDoList.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ToDoListService {
-    private ToDoListRepository toDoListRepository;
-    public ToDoListService(ToDoListRepository toDo){
-        this.toDoListRepository =toDo;
+public class TaskService {
+    private TaskRepository taskRepository;
+    public TaskService(TaskRepository toDo){
+        this.taskRepository =toDo;
     }
-    public List<ToDoList> findAll(){
-        List<TodDoListEntity> toDoLists= toDoListRepository.findAll();
+    public List<Task> findAll(){
+        List<TaskEntity> toDoLists= taskRepository.findAll();
         return toDoLists.stream()
                 .map(this::transformEntity)
                 .collect(Collectors.toList());
     }
 
-    public ToDoList findById(Long id){
-        var todDoListEntity = toDoListRepository.findById(id);
-        return todDoListEntity.map(this::transformEntity).orElse(null);
+    public Task findById(Long id){
+        var taskEntity = taskRepository.findById(id);
+        return taskEntity.map(this::transformEntity).orElse(null);
     }
-    public ToDoList create(ToDoListManipulationCreatRequest request){
+    public Task create(TaskManipulationCreateRequest request){
 
-        var todDoListEntity = new TodDoListEntity(request.getTitle(), request.getDueDate(), request.getCompleted());
-        todDoListEntity = toDoListRepository.save(todDoListEntity);
-        return transformEntity(todDoListEntity);
+        var taskEntity = new TaskEntity(request.getTitle(), request.getDueDate(), request.getCompleted());
+        taskEntity = taskRepository.save(taskEntity);
+        return transformEntity(taskEntity);
     }
 
-    public ToDoList update(Long id, ToDoListManipulationCreatRequest request){
-        var todDoListEntityOptional = toDoListRepository.findById(id);
-        if(todDoListEntityOptional.isEmpty()){
+    public Task update(Long id, TaskManipulationCreateRequest request){
+        var taskEntityOptional = taskRepository.findById(id);
+        if(taskEntityOptional.isEmpty()){
             return null;
         }
-        var toDoListEntity= todDoListEntityOptional.get();
-        toDoListEntity.setTitle(request.getTitle());
-        toDoListEntity.setDueDate(request.getDueDate());
-        toDoListEntity.setCompleted(request.getCompleted());
-        toDoListEntity =toDoListRepository.save(toDoListEntity);
+        var taskEntity= taskEntityOptional.get();
+        taskEntity.setTitle(request.getTitle());
+        taskEntity.setDueDate(request.getDueDate());
+        taskEntity.setCompleted(request.getCompleted());
+        taskEntity = taskRepository.save(taskEntity);
 
 
-        return transformEntity(toDoListEntity);
+        return transformEntity(taskEntity);
     }
     public boolean deleteById(Long id){
-        if (!toDoListRepository.existsById(id)){
+        if (!taskRepository.existsById(id)){
             return false;
         }
-        toDoListRepository.deleteById(id);
+        taskRepository.deleteById(id);
         return true;
     }
 
-    private ToDoList transformEntity(TodDoListEntity todDoListEntity) {
-        List<TodDoListEntity> toDoLists= toDoListRepository.findAll();
-        return new ToDoList(
-                        todDoListEntity.getId(),
-                        todDoListEntity.getTitle(),
-                        todDoListEntity.getDueDate(),
-                        todDoListEntity.getCompleted()
+    private Task transformEntity(TaskEntity taskEntity) {
+        List<TaskEntity> toDoLists= taskRepository.findAll();
+        return new Task(
+                        taskEntity.getId(),
+                        taskEntity.getTitle(),
+                        taskEntity.getDueDate(),
+                        taskEntity.getCompleted()
                 );
     }
 }
