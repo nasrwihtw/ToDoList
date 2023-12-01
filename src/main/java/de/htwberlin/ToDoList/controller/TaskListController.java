@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class TaskListController {
     private final TaskListService taskListService;
 

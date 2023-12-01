@@ -9,6 +9,9 @@ public class TaskListManipulationCreateRequest {
         this.owner = owner;
     }
 
+    public TaskListManipulationCreateRequest() {
+    }
+
     public String getName() {
         return name;
     }

@@ -11,6 +11,7 @@ public class TaskListEntity {
         private Long id;
         @Column(name="name", nullable = false)
         private String name;
+
         @Column(name="owner" , nullable = false)
         private String owner;
 

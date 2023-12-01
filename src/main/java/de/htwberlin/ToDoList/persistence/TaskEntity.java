@@ -13,9 +13,10 @@ public class TaskEntity {
     @Column(name="dueDate" , nullable = false)
     private String dueDate;
     @Column(name="completed")
-    private String completed;
+    private boolean completed;
 
-    public TaskEntity(String title, String dueDate, String completed) {
+
+    public TaskEntity(String title, String dueDate, boolean completed) {
         this.title = title;
         this.dueDate = dueDate;
         this.completed = completed;
@@ -43,11 +44,12 @@ public class TaskEntity {
         this.dueDate = dueDate;
     }
 
-    public String getCompleted() {
+    public boolean getCompleted() {
         return completed;
     }
 
-    public void setCompleted(String completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
 }

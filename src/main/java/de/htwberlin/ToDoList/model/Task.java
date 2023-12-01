@@ -7,9 +7,9 @@ public class Task {
     private Long id;
     private String title;
     private String dueDate;
-    private String completed;
+    private boolean completed;
 
-    public Task(Long id, String title, String dueDate, String completed) {
+    public Task(Long id, String title, String dueDate, boolean completed) {
         this.id = id;
         this.title = title;
         this.dueDate = dueDate;
@@ -40,11 +40,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public String getCompleted() {
+    public boolean getCompleted() {
         return completed;
     }
 
-    public void setCompleted(String completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 }
