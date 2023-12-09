@@ -28,7 +28,7 @@ public class TaskService {
     }
     public Task create(TaskManipulationCreateRequest request){
 
-        var taskEntity = new TaskEntity(request.getTitle(), request.getDueDate(), request.getCompleted());
+        var taskEntity = new TaskEntity(request.getTitle(),request.getCompleted());
         taskEntity = taskRepository.save(taskEntity);
         return transformEntity(taskEntity);
     }
@@ -40,7 +40,6 @@ public class TaskService {
         }
         var taskEntity= taskEntityOptional.get();
         taskEntity.setTitle(request.getTitle());
-        taskEntity.setDueDate(request.getDueDate());
         taskEntity.setCompleted(request.getCompleted());
         taskEntity = taskRepository.save(taskEntity);
 
@@ -60,7 +59,6 @@ public class TaskService {
         return new Task(
                         taskEntity.getId(),
                         taskEntity.getTitle(),
-                        taskEntity.getDueDate(),
                         taskEntity.getCompleted()
                 );
     }

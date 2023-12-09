@@ -6,13 +6,13 @@ public class Task {
 
     private Long id;
     private String title;
-    private String dueDate;
+
     private boolean completed;
 
-    public Task(Long id, String title, String dueDate, boolean completed) {
+    public Task(Long id, String title, boolean completed) {
         this.id = id;
         this.title = title;
-        this.dueDate = dueDate;
+
         this.completed = completed;
     }
 
@@ -32,13 +32,6 @@ public class Task {
         this.title = title;
     }
 
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
-    }
 
     public boolean getCompleted() {
         return completed;
