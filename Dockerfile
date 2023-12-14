@@ -1,5 +1,5 @@
 # Build Stage
-FROM adoptopenjdk:17-jre-hotspot as build-stage
+FROM gradle:jdk17-jammy as build-stage
 
 WORKDIR /app
 
@@ -7,12 +7,15 @@ COPY . .
 
 RUN ./gradlew build
 
-# Production Stage
-FROM adoptopenjdk:11-jre-hotspot as production-stage
+# Package Stage
+FROM eclipse-temurin:17-jdk-jammy
 
 COPY --from=build-stage /app/build/libs/todolist-backend-app.jar /app/app.jar
 
 EXPOSE 8080
 
 CMD ["java", "-jar", "/app/app.jar"]
+
+
+
 
