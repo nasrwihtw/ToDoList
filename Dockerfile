@@ -1,20 +1,16 @@
-# Build Stage
-FROM gradle:jdk17-jammy as build-stage
+# Build stage
+FROM gradle:jdk17-jammy AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon
 
-WORKDIR /app
+LABEL org.name="nasrwihtw"
 
-COPY . .
-
-RUN ./gradlew build
-
-# Package Stage
+# Package stage
 FROM eclipse-temurin:17-jdk-jammy
+COPY --from=build /home/gradle/src/build/libs/todolist-backend-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
 
-COPY --from=build-stage /app/build/libs/todolist-backend-app.jar /app/app.jar
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "/app/app.jar"]
 
 
 
