@@ -1,15 +1,18 @@
-#
-# Build stage
-#
-FROM gradle:jdk17-jammy AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
+# Build Stage
+FROM adoptopenjdk:17-jre-hotspot as build-stage
 
-LABEL org.name="nasrwihtw"
-#
-# Package stage
-#
-FROM eclipse-temurin:17-jdk-jammy
-COPY --from=build /home/gradle/src/build/libs/todolist-backend-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+
+COPY . .
+
+RUN ./gradlew build
+
+# Production Stage
+FROM adoptopenjdk:11-jre-hotspot as production-stage
+
+COPY --from=build-stage /app/build/libs/your-backend-app.jar /app/app.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "/app/app.jar"]
+
