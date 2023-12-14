@@ -10,7 +10,7 @@ RUN ./gradlew build
 # Production Stage
 FROM adoptopenjdk:11-jre-hotspot as production-stage
 
-COPY --from=build-stage /app/build/libs/your-backend-app.jar /app/app.jar
+COPY --from=build-stage /app/build/libs/todolist-backend-app.jar /app/app.jar
 
 EXPOSE 8080
 
