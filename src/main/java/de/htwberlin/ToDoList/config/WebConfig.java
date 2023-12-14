@@ -1,4 +1,4 @@
-package de.htwberlin.webtech.config;
+package de.htwberlin.ToDoList.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,9 +13,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedMethods("*")
-                .allowedOrigins(
-                        "http://localhost:3001",
-                        "https://webtech-todolist-frontend.onrender.com"
-                );
+                .allowedOrigins("http://localhost:3000", "https://webtech-todolist-frontend.onrender.com")
+                .allowCredentials(true)
+                .allowedHeaders("Authorization", "Content-Type");
     }
+
 }
