@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000", "https://webtech-todolist-frontend.onrender.com")
+                .allowedOrigins("http://localhost:3000", "https://todolist-frontend2.onrender.com")
                 .allowCredentials(true)
                 .allowedHeaders("Authorization", "Content-Type");
     }
