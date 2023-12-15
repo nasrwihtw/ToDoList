@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class TaskController {
 
     private final TaskService taskService;
