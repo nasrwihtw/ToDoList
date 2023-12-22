@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 public class TaskController {
 
     private final TaskService taskService;
@@ -26,7 +26,9 @@ public class TaskController {
 
     @GetMapping(path= "/api/a1/task")
     public ResponseEntity<List<Task>> fetchTask(){
-        return ResponseEntity.ok(taskService.findAll());
+        List<Task> tasks = taskService.findAll();
+        System.out.println("Fetched tasks: " + tasks);
+        return ResponseEntity.ok(tasks);
     }
 
     @GetMapping(path= "/api/a1/task/{id}")
