@@ -10,7 +10,7 @@ public class Task {
     private boolean completed;
 
     public Task(Long id, String title, boolean completed) {
-        this.id = id;
+
         this.title = title;
 
         this.completed = completed;

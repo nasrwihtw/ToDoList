@@ -42,7 +42,10 @@ public class TaskController {
     public ResponseEntity<Void> createTask(@RequestBody TaskManipulationCreateRequest request) throws URISyntaxException {
         var task = taskService.create(request);
         URI url= new URI("/api/a1/task" + task.getId());
-        return ResponseEntity.created(url).build();
+        return ResponseEntity.
+                created(url)
+                .header("Access-Control-Expose-Headers", "Location")
+                .build();
     }
 
     @PutMapping("/api/a1/task/{id}")
