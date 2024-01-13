@@ -43,5 +43,6 @@ public class TaskEntity {
     }
 
     public void setId(Long taskId) {
+        this.id = taskId;
     }
 }
