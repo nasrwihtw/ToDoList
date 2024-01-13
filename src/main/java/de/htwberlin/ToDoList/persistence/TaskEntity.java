@@ -42,4 +42,6 @@ public class TaskEntity {
         this.completed = completed;
     }
 
+    public void setId(Long taskId) {
+    }
 }
