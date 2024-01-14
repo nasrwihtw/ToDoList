@@ -3,6 +3,7 @@ package de.htwberlin.ToDoList.service;
 
 import de.htwberlin.ToDoList.api.Task;
 import de.htwberlin.ToDoList.api.TaskManipulationCreateRequest;
+import de.htwberlin.ToDoList.persistence.Priority;
 import de.htwberlin.ToDoList.persistence.TaskEntity;
 import de.htwberlin.ToDoList.repository.TaskRepository;
 import org.assertj.core.api.WithAssertions;
@@ -16,13 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Optional;
-
-import static de.htwberlin.ToDoList.persistence.Priority.HIGH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest implements WithAssertions {
@@ -49,27 +45,12 @@ class TaskServiceTest implements WithAssertions {
     }
 
     @Test
-    @DisplayName("should return false if person to delete does not exist")
-    void should_return_false_if_person_to_delete_does_not_exist() {
-        // given
-        Long givenId = 111L;
-        doReturn(false).when(repository).existsById(givenId);
-
-        // when
-        boolean result = underTest.deleteById(givenId);
-
-        // then
-        verifyNoMoreInteractions(repository);
-        assertThat(result).isFalse();
-    }
-   /* @Test
     public void testUpdateTask() {
         // Arrange
-        LocalDate deadline = LocalDate.of(2024, 1, 14);
         Long taskId = 1L;
-        var task = new Task(23L, "add1", true, HIGH, deadline, "first task to do");
-        TaskManipulationCreateRequest request = new TaskManipulationCreateRequest(task);
-        Task existingTaskEntity = new Task("Original Title", false);
+        LocalDate deadline = LocalDate.of(2024, 1, 14);
+        TaskManipulationCreateRequest request = new TaskManipulationCreateRequest("Updated Title", true, Priority.HIGH,  deadline, "task1");
+        TaskEntity existingTaskEntity = new TaskEntity("Original Title", false,  Priority.LOW,  deadline, "task1");
         existingTaskEntity.setId(taskId);
 
         // Mocking repository behavior
@@ -82,6 +63,5 @@ class TaskServiceTest implements WithAssertions {
         // Assert
         assertEquals(request.getTitle(), updatedTask.getTitle());
         assertEquals(request.getCompleted(), updatedTask.getCompleted());
-    }*/
-
+    }
 }

@@ -81,4 +81,7 @@ public class TaskEntity {
         this.notes = notes;
 
     }
+    public void setId(Long taskId) {
+        this.id = taskId;
+    }
 }
