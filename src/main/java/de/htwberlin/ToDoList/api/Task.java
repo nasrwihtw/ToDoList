@@ -1,44 +1,38 @@
-package de.htwberlin.ToDoList.persistence;
+package de.htwberlin.ToDoList.api;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import de.htwberlin.ToDoList.persistence.Priority;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity(name= "Task")
-public class TaskEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+
+public class Task {
+
+
     private Long id;
-    @Column(name="title", nullable = false)
     private String title;
-    @Column(name="completed")
     private boolean completed;
-    @Column(name="priority")
     private Priority priority;
-    @Column(name="datum")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
-    @Column(name="notes")
     private String notes;
 
-
-
-    public TaskEntity(String title, boolean completed, Priority priority, LocalDate dueDate,String notes) {
+    public Task(Long id, String title, boolean completed, Priority priority, LocalDate dueDate , String notes) {
+        this.id= id;
         this.title = title;
         this.completed = completed;
         this.priority= priority;
         this.dueDate=dueDate;
-        this.notes=notes;
-
+        this.notes = notes;
     }
 
-    protected TaskEntity() {}
+
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -57,7 +51,6 @@ public class TaskEntity {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
-
     public Priority getPriority() {
         return priority;
     }
@@ -65,14 +58,14 @@ public class TaskEntity {
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
-
     public LocalDate getDueDate() {
         return dueDate;
     }
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
 
+
+    public void setDueDate(LocalDate deadline) {
+        this.dueDate = deadline;
+    }
     public String getNotes() {
         return notes;
     }
@@ -80,4 +73,5 @@ public class TaskEntity {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
 }

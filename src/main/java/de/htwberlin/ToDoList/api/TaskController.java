@@ -1,10 +1,9 @@
-package de.htwberlin.ToDoList.controller;
+package de.htwberlin.ToDoList.api;
 
 
 
-import de.htwberlin.ToDoList.model.Task;
-import de.htwberlin.ToDoList.model.TaskManipulationCreateRequest;
 import de.htwberlin.ToDoList.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,13 +38,14 @@ public class TaskController {
 
 
     @PostMapping(path= "/api/a1/task")
-    public ResponseEntity<Void> createTask(@RequestBody TaskManipulationCreateRequest request) throws URISyntaxException {
-        var task = taskService.create(request);
-        URI url= new URI("/api/a1/task" + task.getId());
-        return ResponseEntity.
-                created(url)
-                .header("Access-Control-Expose-Headers", "Location")
-                .build();
+    public ResponseEntity<Void> createTask( @Valid @RequestBody TaskManipulationCreateRequest request) throws URISyntaxException {
+            var task = taskService.create(request);
+            URI url= new URI("/api/a1/task" + task.getId());
+            return ResponseEntity.
+                    created(url)
+                    .header("Access-Control-Expose-Headers", "Location")
+                    .build();
+
     }
 
     @PutMapping("/api/a1/task/{id}")
@@ -59,4 +59,8 @@ public class TaskController {
         return  successful? ResponseEntity.ok().build(): ResponseEntity.notFound().build();
     }
 
+   private boolean validate(TaskManipulationCreateRequest request){
+        return request.getTitle() !=null
+                && !request.getTitle().isBlank();
+   }
 }

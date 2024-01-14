@@ -1,44 +1,29 @@
-package de.htwberlin.ToDoList.persistence;
+package de.htwberlin.ToDoList.api;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import de.htwberlin.ToDoList.persistence.Priority;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity(name= "Task")
-public class TaskEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
-    @Column(name="title", nullable = false)
+public class TaskManipulationCreateRequest {
+    @NotBlank( message = "please provide a task")
     private String title;
-    @Column(name="completed")
     private boolean completed;
-    @Column(name="priority")
     private Priority priority;
-    @Column(name="datum")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
-    @Column(name="notes")
     private String notes;
 
 
-
-    public TaskEntity(String title, boolean completed, Priority priority, LocalDate dueDate,String notes) {
+    public TaskManipulationCreateRequest(String title, boolean completed, Priority priority, LocalDate dueDate , String notes) {
         this.title = title;
         this.completed = completed;
         this.priority= priority;
         this.dueDate=dueDate;
-        this.notes=notes;
-
+        this.notes = notes;
     }
 
-    protected TaskEntity() {}
-
-    public Long getId() {
-        return id;
+    public TaskManipulationCreateRequest() {
     }
 
     public String getTitle() {
@@ -49,13 +34,15 @@ public class TaskEntity {
         this.title = title;
     }
 
-
     public boolean getCompleted() {
         return completed;
     }
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
     public Priority getPriority() {
@@ -66,9 +53,6 @@ public class TaskEntity {
         this.priority = priority;
     }
 
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }

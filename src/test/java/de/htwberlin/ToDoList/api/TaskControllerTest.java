@@ -1,9 +1,9 @@
-package de.htwberlin.ToDoList.controller;
+package de.htwberlin.ToDoList.api;
 
 
 
 
-import de.htwberlin.ToDoList.model.Task;
+import de.htwberlin.ToDoList.persistence.Priority;
 import de.htwberlin.ToDoList.service.TaskService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +13,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static de.htwberlin.ToDoList.persistence.Priority.HIGH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
@@ -41,8 +46,16 @@ class TaskControllerTest {
     @DisplayName("should return 201 http status and Location header when creating a person")
     void should_return_201_http_status_and_location_header_when_creating_a_person() throws Exception {
         // given
-        String taskCreate = "{\"title\": \"add1\", \"completed\": true}";
-        var task = new Task(23L, "add1", true);
+        LocalDate deadline = LocalDate.of(2024, 1, 14);
+        String taskCreate = "{"
+                + "\"title\": \"add1\", "
+                + "\"completed\": true, "
+                + "\"priority\": \"HIGH\", "
+                + "\"deadline\": \"" + deadline + "\", "
+                + "\"notes\": \"first task to do\""
+                + "}";
+
+        var task = new Task(23L, "add1", true, HIGH, deadline, "first task to do");
         doReturn(task).when(taskService).create(any());
 
         // when
@@ -54,10 +67,12 @@ class TaskControllerTest {
                 // then
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(header().string("Location", Matchers.equalTo(("/api/a1/task" + task.getId()))));
-//            .andExpect(header().string("Location", Matchers.containsString(Long.toString(person.getId()))));
+                .andExpect(header().string("Location", Matchers.endsWith("/api/a1/task" + task.getId())));
 
-}
+
+    }
+
+
     @Test
     @DisplayName("should return 404 if task is not found")
     public void fetchTaskById() throws Exception {

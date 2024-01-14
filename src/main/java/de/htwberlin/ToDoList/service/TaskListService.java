@@ -1,7 +1,6 @@
 package de.htwberlin.ToDoList.service;
 
 
-import de.htwberlin.ToDoList.model.Task;
 import de.htwberlin.ToDoList.model.TaskList;
 import de.htwberlin.ToDoList.model.TaskListManipulationCreateRequest;
 import de.htwberlin.ToDoList.persistence.TaskListEntity;

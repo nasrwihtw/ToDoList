@@ -1,7 +1,7 @@
 package de.htwberlin.ToDoList.service;
 
-import de.htwberlin.ToDoList.model.Task;
-import de.htwberlin.ToDoList.model.TaskManipulationCreateRequest;
+import de.htwberlin.ToDoList.api.Task;
+import de.htwberlin.ToDoList.api.TaskManipulationCreateRequest;
 import de.htwberlin.ToDoList.persistence.TaskEntity;
 import de.htwberlin.ToDoList.repository.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class TaskService {
     }
     public Task create(TaskManipulationCreateRequest request){
 
-        var taskEntity = new TaskEntity(request.getTitle(),request.getCompleted());
+        var taskEntity = new TaskEntity(request.getTitle(),request.getCompleted(), request.getPriority(), request.getDueDate(), request.getNotes());
         taskEntity = taskRepository.save(taskEntity);
         return transformEntity(taskEntity);
     }
@@ -41,6 +41,9 @@ public class TaskService {
         var taskEntity= taskEntityOptional.get();
         taskEntity.setTitle(request.getTitle());
         taskEntity.setCompleted(request.getCompleted());
+        taskEntity.setPriority(request.getPriority());
+        taskEntity.setDueDate(request.getDueDate());
+        taskEntity.setNotes(request.getNotes());
         taskEntity = taskRepository.save(taskEntity);
 
 
@@ -59,7 +62,10 @@ public class TaskService {
         return new Task(
                         taskEntity.getId(),
                         taskEntity.getTitle(),
-                        taskEntity.getCompleted()
+                        taskEntity.getCompleted(),
+                        taskEntity.getPriority(),
+                        taskEntity.getDueDate(),
+                        taskEntity.getNotes()
                 );
     }
 }
