@@ -1,6 +1,9 @@
 package de.htwberlin.ToDoList.service;
 
 
+import de.htwberlin.ToDoList.model.Task;
+import de.htwberlin.ToDoList.model.TaskManipulationCreateRequest;
+import de.htwberlin.ToDoList.persistence.TaskEntity;
 import de.htwberlin.ToDoList.repository.TaskRepository;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -52,4 +60,24 @@ class TaskServiceTest implements WithAssertions {
         verifyNoMoreInteractions(repository);
         assertThat(result).isFalse();
     }
+    @Test
+    public void testUpdateTask() {
+        // Arrange
+        Long taskId = 1L;
+        TaskManipulationCreateRequest request = new TaskManipulationCreateRequest("Updated Title", true);
+        TaskEntity existingTaskEntity = new TaskEntity("Original Title", false);
+        existingTaskEntity.setId(taskId);
+
+        // Mocking repository behavior
+        Mockito.when(repository.findById(taskId)).thenReturn(Optional.of(existingTaskEntity));
+        Mockito.when(repository.save(Mockito.any(TaskEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Task updatedTask = underTest.update(taskId, request);
+
+        // Assert
+        assertEquals(request.getTitle(), updatedTask.getTitle());
+        assertEquals(request.getCompleted(), updatedTask.getCompleted());
+    }
+
 }

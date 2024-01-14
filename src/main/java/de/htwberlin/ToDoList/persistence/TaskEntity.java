@@ -79,5 +79,6 @@ public class TaskEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+
     }
 }
