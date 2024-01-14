@@ -4,6 +4,7 @@ import de.htwberlin.ToDoList.persistence.Priority;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 public class Task {
@@ -14,6 +15,7 @@ public class Task {
     private boolean completed;
     private Priority priority;
     private LocalDate dueDate;
+
     private String notes;
 
     public Task(Long id, String title, boolean completed, Priority priority, LocalDate dueDate , String notes) {
